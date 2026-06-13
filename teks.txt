@@ -1,0 +1,748 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSLRBooth Web - Solusi Photobooth Interaktif</title>
+  <!-- Tailwind CSS untuk Desain Premium -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons untuk Icon UI -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, #1e1e2f 0%, #0f0f15 100%);
+    }
+    /* Efek Berkedip untuk Tombol Mulai */
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(236, 72, 153, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(236, 72, 153, 0.8); }
+    }
+    .btn-start-glow {
+      animation: pulse-glow 2s infinite ease-in-out;
+    }
+    /* Mirroring Video untuk Pengalaman Selfie Alami */
+    .mirrored {
+      transform: scaleX(-1);
+    }
+  </style>
+</head>
+<body class="text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+  <!-- HEADER -->
+  <header class="bg-black/40 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center z-10">
+    <div class="flex items-center gap-3">
+      <div class="p-2 bg-pink-600 rounded-lg">
+        <i data-lucide="camera" class="w-6 h-6 text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+          NEXUS BOOTH
+        </h1>
+        <p class="text-xs text-gray-400">DSLRBooth Smart Simulation</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-2 text-xs bg-green-500/10 text-green-400 px-3 py-1.5 rounded-full border border-green-500/20">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+        Kamera Siap
+      </span>
+      <span id="backend-status" class="flex items-center gap-2 text-xs bg-yellow-500/10 text-yellow-400 px-3 py-1.5 rounded-full border border-yellow-500/20">
+        <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+        Server Cetak Offline
+      </span>
+    </div>
+  </header>
+
+  <!-- UTAMA / AREA ALUR KERJA (DASHBOARD & STEP-BY-STEP) -->
+  <main class="flex-grow flex items-center justify-center p-4">
+    <div class="w-full max-w-6xl">
+
+      <!-- ================= 1. DASHBOARD SCREEN ================= -->
+      <section id="step-1" class="text-center py-12 flex flex-col items-center justify-center">
+        <div class="relative mb-8">
+          <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-pink-600 to-violet-600 blur-xl opacity-75"></div>
+          <div class="relative bg-black/50 p-8 rounded-full border border-white/10">
+            <i data-lucide="aperture" class="w-24 h-24 text-pink-500 animate-[spin_10s_linear_infinite]"></i>
+          </div>
+        </div>
+        <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+          Siap Untuk <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">Swafoto</span>?
+        </h2>
+        <p class="text-gray-400 text-lg md:text-xl max-w-lg mx-auto mb-10">
+          Ambil 3 pose terbaik Anda, pilih template premium, dan cetak foto kenangan Anda secara instan layaknya mesin profesional.
+        </p>
+        <button onclick="goToStep(2)" class="btn-start-glow bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 text-white text-xl font-bold px-12 py-5 rounded-full transition-all duration-300 flex items-center gap-3">
+          <i data-lucide="play" class="w-6 h-6 fill-white"></i>
+          MULAI PHOTOBOOTH
+        </button>
+      </section>
+
+      <!-- ================= 2. TEMPLATE SELECTION ================= -->
+      <section id="step-2" class="hidden">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold mb-2">Pilih Template Photobooth</h2>
+          <p class="text-gray-400">Sesuaikan tema bingkai foto Anda di bawah ini</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <!-- Template 1: Retro Neon -->
+          <div onclick="selectTemplate('retro-neon')" class="group relative cursor-pointer bg-white/5 border-2 border-white/10 rounded-2xl p-4 hover:border-pink-500 transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-[2/3] w-full rounded-lg overflow-hidden relative bg-gradient-to-b from-[#120c1f] to-[#030008] border border-white/10 p-3 flex flex-col gap-2">
+              <div class="flex-grow bg-gray-800 rounded flex items-center justify-center text-xs text-pink-400 border border-pink-500/20">Foto 1</div>
+              <div class="flex-grow bg-gray-800 rounded flex items-center justify-center text-xs text-pink-400 border border-pink-500/20">Foto 2</div>
+              <div class="flex-grow bg-gray-800 rounded flex items-center justify-center text-xs text-pink-400 border border-pink-500/20">Foto 3</div>
+              <div class="h-8 flex items-center justify-center text-[10px] text-pink-500 font-bold uppercase tracking-widest border-t border-pink-500/20">
+                ⚡ RETRO NEON ⚡
+              </div>
+            </div>
+            <h3 class="text-lg font-bold mt-4 text-center group-hover:text-pink-400 transition-colors">Neon Retro</h3>
+          </div>
+
+          <!-- Template 2: Minimalist Wedding -->
+          <div onclick="selectTemplate('elegant-wedding')" class="group relative cursor-pointer bg-white/5 border-2 border-white/10 rounded-2xl p-4 hover:border-violet-500 transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-[2/3] w-full rounded-lg overflow-hidden relative bg-emerald-50 border border-emerald-900/10 p-3 flex flex-col gap-2 text-gray-800">
+              <div class="flex-grow bg-white rounded flex items-center justify-center text-xs text-emerald-800 border border-emerald-900/10">Foto 1</div>
+              <div class="flex-grow bg-white rounded flex items-center justify-center text-xs text-emerald-800 border border-emerald-900/10">Foto 2</div>
+              <div class="flex-grow bg-white rounded flex items-center justify-center text-xs text-emerald-800 border border-emerald-900/10">Foto 3</div>
+              <div class="h-8 flex flex-col items-center justify-center">
+                <span class="text-[9px] font-semibold text-emerald-950 uppercase tracking-widest">Happy Wedding</span>
+                <span class="text-[6px] text-emerald-700 font-serif italic">Rian & Siska</span>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold mt-4 text-center group-hover:text-violet-400 transition-colors">Elegant Wedding</h3>
+          </div>
+
+          <!-- Template 3: Cyberpunk Tech -->
+          <div onclick="selectTemplate('cyberpunk')" class="group relative cursor-pointer bg-white/5 border-2 border-white/10 rounded-2xl p-4 hover:border-yellow-500 transition-all duration-300 transform hover:-translate-y-2">
+            <div class="aspect-[2/3] w-full rounded-lg overflow-hidden relative bg-black border border-yellow-500/30 p-3 flex flex-col gap-2">
+              <div class="flex-grow bg-zinc-900 rounded flex items-center justify-center text-xs text-yellow-400 border border-yellow-500/10">Foto 1</div>
+              <div class="flex-grow bg-zinc-900 rounded flex items-center justify-center text-xs text-yellow-400 border border-yellow-500/10">Foto 2</div>
+              <div class="flex-grow bg-zinc-900 rounded flex items-center justify-center text-xs text-yellow-400 border border-yellow-500/10">Foto 3</div>
+              <div class="h-8 flex items-center justify-center text-[9px] text-yellow-400 font-mono uppercase tracking-widest border-t border-yellow-500/20">
+                🤖 CYBER_BOOTH.v1 🤖
+              </div>
+            </div>
+            <h3 class="text-lg font-bold mt-4 text-center group-hover:text-yellow-400 transition-colors">Cyberpunk Tech</h3>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <button onclick="goToStep(1)" class="text-sm text-gray-400 hover:text-white flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Dashboard
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 3 & 4. LIVE CAMERA PREVIEW WITH OVERLAY ================= -->
+      <section id="step-3" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Sisi Kiri: Monitor Kamera -->
+          <div class="lg:col-span-8 flex flex-col gap-4">
+            <div class="relative bg-black rounded-3xl overflow-hidden border border-white/10 aspect-video shadow-2xl">
+              <!-- Video Stream -->
+              <video id="webcam" class="w-full h-full object-cover mirrored" autoplay playsinline></video>
+              
+              <!-- Simulasi Frame Camera Jika Webcam Tidak Diizinkan / Dipakai -->
+              <div id="camera-fallback" class="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center gap-4 hidden">
+                <div class="p-4 bg-white/10 rounded-full animate-pulse">
+                  <i data-lucide="videoff" class="w-12 h-12 text-gray-400"></i>
+                </div>
+                <p class="text-gray-300 font-medium">Mengaktifkan Webcam Anda...</p>
+                <button onclick="initCamera()" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded-lg text-xs font-semibold">
+                  Minta Ulang Izin
+                </button>
+              </div>
+
+              <!-- Real-time Watermark / Peringatan Sesi -->
+              <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 border border-white/10">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></div>
+                <span class="text-xs font-bold tracking-widest uppercase">LIVE PREVIEW</span>
+              </div>
+
+              <!-- Indikator Frame Aktif Terpilih di Atas Kamera (Layer Terluar Kamera) -->
+              <div id="live-overlay" class="absolute inset-0 pointer-events-none flex flex-col justify-between p-6">
+                <!-- Frame visual styling will dynamicly inject based on chosen theme -->
+                <div class="border-4 border-pink-500/20 rounded-xl h-full w-full pointer-events-none flex items-center justify-center">
+                  <span class="text-white/20 text-xs font-mono">FRAME LAYER ACTIVE</span>
+                </div>
+              </div>
+
+              <!-- Flash Effect Canvas -->
+              <div id="flash-effect" class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-75"></div>
+
+              <!-- Hitung Mundur Raksasa -->
+              <div id="countdown-layer" class="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+                <span id="countdown-text" class="text-8xl md:text-9xl font-black text-white drop-shadow-[0_5px_15px_rgba(236,72,153,0.5)] animate-bounce">
+                  3
+                </span>
+              </div>
+            </div>
+
+            <!-- Panel Pengambilan Foto -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <div class="h-10 w-10 rounded-full bg-pink-500/20 text-pink-500 flex items-center justify-center font-bold">
+                  Sesi
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm">Ambil Swafoto Mandiri</h4>
+                  <p class="text-xs text-gray-400">Tekan tombol ambil foto jika sudah siap</p>
+                </div>
+              </div>
+              <button id="snap-btn" onclick="startPhotoSession()" class="bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 px-8 py-4 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-pink-500/20 transition-all active:scale-95">
+                <i data-lucide="aperture" class="w-5 h-5"></i>
+                Mulai 3x Foto
+              </button>
+            </div>
+          </div>
+
+          <!-- Sisi Kanan: Progres & Template Output Preview -->
+          <div class="lg:col-span-4 flex flex-col gap-6">
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <h3 class="font-bold text-lg mb-4 text-center">Foto Strip Berjalan</h3>
+              
+              <!-- 3 Kotak Antrian Foto Strip -->
+              <div id="active-strip-preview" class="max-w-[190px] mx-auto aspect-[2/3] rounded-xl overflow-hidden shadow-2xl flex flex-col gap-2 p-3 transition-all duration-300">
+                <!-- 3 Kotak Slot Gambar -->
+                <div id="slot-0" class="flex-grow bg-slate-800 rounded relative overflow-hidden flex items-center justify-center border border-white/10 group">
+                  <span class="text-xs text-gray-500 font-mono">FOTO 1</span>
+                  <img class="absolute inset-0 w-full h-full object-cover hidden" alt="Foto 1">
+                  <!-- Retake Button -->
+                  <button onclick="retakePhoto(0)" class="absolute bottom-1 right-1 bg-black/80 hover:bg-red-600 p-1.5 rounded-lg text-white text-xs hidden group-hover:block transition-all shadow">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <div id="slot-1" class="flex-grow bg-slate-800 rounded relative overflow-hidden flex items-center justify-center border border-white/10 group">
+                  <span class="text-xs text-gray-500 font-mono">FOTO 2</span>
+                  <img class="absolute inset-0 w-full h-full object-cover hidden" alt="Foto 2">
+                  <button onclick="retakePhoto(1)" class="absolute bottom-1 right-1 bg-black/80 hover:bg-red-600 p-1.5 rounded-lg text-white text-xs hidden group-hover:block transition-all shadow">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <div id="slot-2" class="flex-grow bg-slate-800 rounded relative overflow-hidden flex items-center justify-center border border-white/10 group">
+                  <span class="text-xs text-gray-500 font-mono">FOTO 3</span>
+                  <img class="absolute inset-0 w-full h-full object-cover hidden" alt="Foto 3">
+                  <button onclick="retakePhoto(2)" class="absolute bottom-1 right-1 bg-black/80 hover:bg-red-600 p-1.5 rounded-lg text-white text-xs hidden group-hover:block transition-all shadow">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- Label Footer Strip -->
+                <div id="strip-footer-text" class="h-6 flex items-center justify-center text-[8px] font-bold tracking-widest uppercase">
+                  NEXUS PHOTOBOOTH
+                </div>
+              </div>
+
+              <!-- Retake & Batal Options -->
+              <div class="mt-6 flex flex-col gap-2">
+                <button id="btn-compile-strip" onclick="compileAndGoToPrint()" disabled class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all">
+                  <i data-lucide="check-circle" class="w-5 h-5"></i>
+                  Simpan & Lanjut Cetak
+                </button>
+                <button onclick="cancelSession()" class="w-full text-center text-xs text-red-400 hover:text-red-300 py-2">
+                  Batal / Ganti Template
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 5 & 6. PRINT PAGE & COMPLETED VIEW ================= -->
+      <section id="step-4" class="hidden">
+        <div class="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">
+              Selesai & Cetak Foto!
+            </h2>
+            <p class="text-gray-400">Silakan tinjau hasil strip photobooth akhir Anda di bawah ini</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Hasil Canvas Final (Cetak) -->
+            <div class="flex justify-center">
+              <div class="bg-black/40 p-4 rounded-2xl border border-white/10 shadow-xl max-w-[320px] w-full">
+                <canvas id="final-canvas" class="w-full h-auto rounded-lg shadow-2xl"></canvas>
+              </div>
+            </div>
+
+            <!-- Opsi Cetak & Unduh -->
+            <div class="flex flex-col gap-6">
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h4 class="font-bold text-lg mb-2 flex items-center gap-2">
+                  <i data-lucide="settings" class="text-pink-500"></i>
+                  Metode Cetak / Simpan
+                </h4>
+                <p class="text-xs text-gray-400 mb-6">Pilih salah satu metode output yang Anda inginkan di bawah ini.</p>
+
+                <!-- Tombol Kirim Ke Server Python (Instant Print) -->
+                <button onclick="sendToLocalPrinter()" class="w-full bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-3 shadow-lg shadow-pink-500/20 mb-3 transition-transform active:scale-[0.98]">
+                  <i data-lucide="printer" class="w-5 h-5"></i>
+                  Cetak Instan (Printer Fisik)
+                </button>
+
+                <!-- Tombol Cetak Browser Standar -->
+                <button onclick="window.print()" class="w-full bg-white/10 hover:bg-white/20 py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 mb-3 transition-colors">
+                  <i data-lucide="monitor-play" class="w-5 h-5"></i>
+                  Cetak via Dialog Browser (PDF/Kertas)
+                </button>
+
+                <!-- Tombol Unduh PNG -->
+                <button onclick="downloadImage()" class="w-full bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-600/30 py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 transition-colors">
+                  <i data-lucide="download" class="w-5 h-5"></i>
+                  Unduh File Gambar (PNG)
+                </button>
+              </div>
+
+              <!-- Navigasi Belakang -->
+              <div class="flex gap-4">
+                <button onclick="resetToDashboard()" class="flex-grow bg-white/5 hover:bg-white/10 py-3 rounded-xl font-semibold text-sm transition-colors text-center">
+                  Mulai Sesi Baru
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-4 text-center text-xs text-gray-500 border-t border-white/5 bg-black/20">
+    <p>&copy; 2026 Nexus DSLRBooth Simulator. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPT UTAMA PHOTOBOOTH -->
+  <script>
+    // Konfigurasi State Aplikasi
+    let currentStep = 1;
+    let selectedTemplateId = 'retro-neon';
+    let stream = null;
+    let capturedImages = [null, null, null];
+    let isCapturing = false;
+    let localServerUrl = 'http://localhost:5001'; // Port backend python server
+
+    // Database Template Styling
+    const templatesConfig = {
+      'retro-neon': {
+        bg: 'linear-gradient(to bottom, #120c1f, #030008)',
+        footerBg: '#030008',
+        textColor: '#ec4899',
+        footerText: '⚡ RETRO NEON ⚡',
+        borderColor: '#ec4899',
+        borderWidth: 4,
+        padding: 16
+      },
+      'elegant-wedding': {
+        bg: '#f0fdfa',
+        footerBg: '#f0fdfa',
+        textColor: '#042f1a',
+        footerText: 'HAPPY WEDDING - RIAN & SISKA',
+        borderColor: '#059669',
+        borderWidth: 4,
+        padding: 16
+      },
+      'cyberpunk': {
+        bg: '#000000',
+        footerBg: '#000000',
+        textColor: '#eab308',
+        footerText: '🤖 CYBER_BOOTH.v1 🤖',
+        borderColor: '#eab308',
+        borderWidth: 4,
+        padding: 16
+      }
+    };
+
+    // Initialize Lucide Icons
+    window.onload = function() {
+      lucide.createIcons();
+      checkBackendStatus();
+      setInterval(checkBackendStatus, 10000); // Cek status printer background
+    };
+
+    // Deteksi koneksi ke backend Python untuk cetak fisik otomatis
+    async function checkBackendStatus() {
+      const statusEl = document.getElementById('backend-status');
+      try {
+        const response = await fetch(`${localServerUrl}/status`, { mode: 'cors' });
+        if (response.ok) {
+          statusEl.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-green-400"></i> Server Cetak Online`;
+          statusEl.className = "flex items-center gap-2 text-xs bg-green-500/10 text-green-400 px-3 py-1.5 rounded-full border border-green-500/20";
+        } else {
+          throw new Error();
+        }
+      } catch (e) {
+        statusEl.innerHTML = `<i data-lucide="printer" class="w-3.5 h-3.5 text-yellow-400"></i> Server Cetak Offline`;
+        statusEl.className = "flex items-center gap-2 text-xs bg-yellow-500/10 text-yellow-400 px-3 py-1.5 rounded-full border border-yellow-500/20";
+      }
+      lucide.createIcons();
+    }
+
+    // Manajemen Langkah Alur Aplikasi (Page Nav)
+    function goToStep(step) {
+      document.getElementById(`step-${currentStep}`).classList.add('hidden');
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+      currentStep = step;
+
+      if (step === 3) {
+        initCamera();
+      } else {
+        stopCamera();
+      }
+    }
+
+    // Mengaktifkan kamera pengguna
+    async function initCamera() {
+      const video = document.getElementById('webcam');
+      const fallback = document.getElementById('camera-fallback');
+      
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 1280, height: 720, facingMode: "user" },
+          audio: false
+        });
+        video.srcObject = stream;
+        video.classList.remove('hidden');
+        fallback.classList.add('hidden');
+      } catch (err) {
+        console.error("Gagal mendapatkan akses webcam:", err);
+        fallback.classList.remove('hidden');
+        video.classList.add('hidden');
+      }
+    }
+
+    // Mematikan kamera untuk efisiensi
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+    }
+
+    // Seleksi Template
+    function selectTemplate(templateId) {
+      selectedTemplateId = templateId;
+      applyTemplateStylesToPreviewStrip();
+      goToStep(3);
+    }
+
+    // Mengaplikasikan style visual template ke area kerja preview kanan secara interaktif
+    function applyTemplateStylesToPreviewStrip() {
+      const strip = document.getElementById('active-strip-preview');
+      const footer = document.getElementById('strip-footer-text');
+      const conf = templatesConfig[selectedTemplateId];
+
+      if (selectedTemplateId === 'elegant-wedding') {
+        strip.style.background = conf.bg;
+        footer.style.color = conf.textColor;
+        footer.innerHTML = `
+          <div class="flex flex-col items-center justify-center">
+            <span class="text-[8px] font-bold tracking-widest leading-none">HAPPY WEDDING</span>
+            <span class="text-[6px] italic leading-tight">Rian & Siska</span>
+          </div>
+        `;
+      } else {
+        strip.style.background = conf.bg;
+        footer.style.color = conf.textColor;
+        footer.textContent = conf.footerText;
+      }
+    }
+
+    // Memulai sesi foto otomatis (3 jepretan)
+    async function startPhotoSession() {
+      if (isCapturing) return;
+      isCapturing = true;
+      document.getElementById('snap-btn').disabled = true;
+      document.getElementById('snap-btn').textContent = "Mengambil Foto...";
+
+      for (let i = 0; i < 3; i++) {
+        // Abaikan jika slot sudah diisi oleh retake manual
+        if (capturedImages[i] !== null) continue;
+
+        await runSingleCaptureCycle(i);
+      }
+
+      finalizeSessionUI();
+    }
+
+    // Menjalankan siklus hitung mundur + flash + penangkapan foto tunggal
+    function runSingleCaptureCycle(slotIndex) {
+      return new Promise((resolve) => {
+        const countdownEl = document.getElementById('countdown-layer');
+        const countdownText = document.getElementById('countdown-text');
+        countdownEl.classList.remove('hidden');
+        
+        let timeLeft = 3;
+        countdownText.textContent = timeLeft;
+
+        const interval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft > 0) {
+            countdownText.textContent = timeLeft;
+          } else {
+            clearInterval(interval);
+            countdownEl.classList.add('hidden');
+            
+            // Efek Flash Shutter Kamera
+            triggerFlashEffect();
+            // Ambil gambar
+            capturePhotoToSlot(slotIndex);
+            
+            // Beri jeda sebentar sebelum lanjut ke siklus berikutnya
+            setTimeout(resolve, 1500);
+          }
+        }, 1000);
+      });
+    }
+
+    // Mengambil snapshot dari elemen video dan menyematkannya di slot strip aktif
+    function capturePhotoToSlot(index) {
+      const video = document.getElementById('webcam');
+      const canvas = document.createElement('canvas');
+      canvas.width = 640;
+      canvas.height = 480;
+      const ctx = canvas.getContext('2d');
+
+      // Terapkan mirror horizontal jika webcam berjalan alami
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      const dataUrl = canvas.toDataURL('image/png');
+      capturedImages[index] = dataUrl;
+
+      // Perbarui tampilan UI strip sisi kanan
+      const slot = document.getElementById(`slot-${index}`);
+      const img = slot.querySelector('img');
+      img.src = dataUrl;
+      img.classList.remove('hidden');
+      slot.querySelector('span').classList.add('hidden');
+
+      // Memutar audio shutter simulasi
+      playShutterSound();
+    }
+
+    // Memutar sound efek shutter kamera sintetis
+    function playShutterSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const bufferSize = audioCtx.sampleRate * 0.1;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1000;
+        noise.connect(filter);
+        filter.connect(audioCtx.destination);
+        noise.start();
+      } catch (e) {
+        console.warn('Suara jepretan gagal diputar.');
+      }
+    }
+
+    // Efek Flash
+    function triggerFlashEffect() {
+      const flash = document.getElementById('flash-effect');
+      flash.classList.remove('opacity-0');
+      flash.classList.add('opacity-100');
+      setTimeout(() => {
+        flash.classList.remove('opacity-100');
+        flash.classList.add('opacity-0');
+      }, 100);
+    }
+
+    // Mengambil ulang foto tertentu jika tidak puas (Opsi Mengulang Foto)
+    async function retakePhoto(index) {
+      capturedImages[index] = null;
+      // Sembunyikan elemen gambar slot tersebut dahulu
+      const slot = document.getElementById(`slot-${index}`);
+      slot.querySelector('img').classList.add('hidden');
+      slot.querySelector('img').src = '';
+      slot.querySelector('span').classList.remove('hidden');
+
+      // Jalankan sesi jepret ulang instan untuk slot ini
+      isCapturing = true;
+      document.getElementById('snap-btn').disabled = true;
+      await runSingleCaptureCycle(index);
+      finalizeSessionUI();
+    }
+
+    // Evaluasi tombol lanjut & mengembalikan kontrol tombol utama
+    function finalizeSessionUI() {
+      isCapturing = false;
+      document.getElementById('snap-btn').disabled = false;
+      document.getElementById('snap-btn').innerHTML = `<i data-lucide="aperture" class="w-5 h-5"></i> Foto Lagi (Ulang)`;
+
+      // Periksa apakah semua 3 foto sudah diambil penuh
+      const allDone = capturedImages.every(img => img !== null);
+      document.getElementById('btn-compile-strip').disabled = !allDone;
+    }
+
+    // Batal sesi penuh
+    function cancelSession() {
+      stopCamera();
+      capturedImages = [null, null, null];
+      for (let i = 0; i < 3; i++) {
+        const slot = document.getElementById(`slot-${i}`);
+        slot.querySelector('img').classList.add('hidden');
+        slot.querySelector('img').src = '';
+        slot.querySelector('span').classList.remove('hidden');
+      }
+      document.getElementById('btn-compile-strip').disabled = true;
+      goToStep(2);
+    }
+
+    // Menggabungkan 3 foto menjadi 1 strip resolusi tinggi untuk cetak
+    function compileAndGoToPrint() {
+      const canvas = document.getElementById('final-canvas');
+      const ctx = canvas.getContext('2d');
+      const conf = templatesConfig[selectedTemplateId];
+
+      // Rasio standar 4x6 Photobooth strip (misal: lebar 600px, tinggi 900px)
+      canvas.width = 600;
+      canvas.height = 900;
+
+      // 1. Gambar Background Template
+      if (selectedTemplateId === 'retro-neon') {
+        const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        grad.addColorStop(0, '#120c1f');
+        grad.addColorStop(1, '#030008');
+        ctx.fillStyle = grad;
+      } else {
+        ctx.fillStyle = conf.bg;
+      }
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. Kalkulasi Dimensi Penempatan 3 Foto Vertikal
+      const padding = conf.padding;
+      const borderW = conf.borderWidth;
+      const slotWidth = canvas.width - (padding * 2);
+      const slotHeight = 230; // Tinggi per box foto
+      const startY = padding;
+      const spacing = 18; // Spasi antar gambar
+
+      let imagesLoaded = 0;
+      capturedImages.forEach((base64Src, index) => {
+        const img = new Image();
+        img.onload = function() {
+          const yPos = startY + (index * (slotHeight + spacing));
+
+          // Draw Border frame untuk tiap foto
+          ctx.strokeStyle = conf.borderColor;
+          ctx.lineWidth = borderW;
+          ctx.strokeRect(padding, yPos, slotWidth, slotHeight);
+
+          // Draw Gambar Foto
+          ctx.drawImage(img, padding + (borderW/2), yPos + (borderW/2), slotWidth - borderW, slotHeight - borderW);
+
+          imagesLoaded++;
+          // Jika ketiga gambar sudah selesai digambar di Canvas
+          if (imagesLoaded === 3) {
+            drawFooterBrand(ctx, canvas.width, canvas.height, conf);
+            goToStep(4);
+          }
+        };
+        img.src = base64Src;
+      });
+    }
+
+    // Menggambar teks promosi/pasangan di footer strip kanvas cetak
+    function drawFooterBrand(ctx, width, height, conf) {
+      ctx.textAlign = 'center';
+      
+      if (selectedTemplateId === 'elegant-wedding') {
+        ctx.fillStyle = '#042f1a';
+        ctx.font = 'bold 22px "Times New Roman", serif';
+        ctx.fillText('HAPPY WEDDING', width / 2, height - 55);
+        
+        ctx.fillStyle = '#059669';
+        ctx.font = 'italic 18px "Times New Roman", serif';
+        ctx.fillText('Rian & Siska', width / 2, height - 30);
+      } else {
+        ctx.fillStyle = conf.textColor;
+        ctx.font = 'bold 24px Courier, monospace';
+        ctx.fillText(conf.footerText, width / 2, height - 40);
+      }
+    }
+
+    // Mengunduh foto final sebagai PNG
+    function downloadImage() {
+      const canvas = document.getElementById('final-canvas');
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `photobooth-nexus-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    }
+
+    // Megirim data gambar base64 ke Printer lokal menggunakan server Python backend
+    async function sendToLocalPrinter() {
+      const canvas = document.getElementById('final-canvas');
+      const dataUrl = canvas.toDataURL('image/png');
+
+      try {
+        const response = await fetch(`${localServerUrl}/print`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: dataUrl }),
+          mode: 'cors'
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alertCustom("Berhasil! Gambar telah dikirim ke antrian pencetakan printer foto Anda.");
+        } else {
+          alertCustom(`Gagal mencetak: ${result.message}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alertCustom("Gagal terhubung ke Printer lokal. Pastikan skrip Python server Anda sudah dijalankan di komputer!");
+      }
+    }
+
+    // Fungsi Custom Alert pengganti alert browser default
+    function alertCustom(message) {
+      const msgBox = document.createElement('div');
+      msgBox.className = "fixed bottom-5 right-5 bg-zinc-900 border-2 border-pink-500 text-white p-6 rounded-2xl shadow-2xl max-w-sm z-50 animate-bounce";
+      msgBox.innerHTML = `
+        <div class="flex items-start gap-3">
+          <i data-lucide="info" class="w-6 h-6 text-pink-500 flex-shrink-0"></i>
+          <div>
+            <h4 class="font-bold text-sm">Notifikasi Sistem</h4>
+            <p class="text-xs text-gray-400 mt-1">${message}</p>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" class="mt-3 bg-pink-600 hover:bg-pink-700 text-xs text-white px-3 py-1 rounded">Ok</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(msgBox);
+      lucide.createIcons();
+    }
+
+    // Reset total
+    function resetToDashboard() {
+      capturedImages = [null, null, null];
+      for (let i = 0; i < 3; i++) {
+        const slot = document.getElementById(`slot-${i}`);
+        slot.querySelector('img').classList.add('hidden');
+        slot.querySelector('img').src = '';
+        slot.querySelector('span').classList.remove('hidden');
+      }
+      document.getElementById('btn-compile-strip').disabled = true;
+      goToStep(1);
+    }
+  </script>
+</body>
+</html>
+
+```
+
